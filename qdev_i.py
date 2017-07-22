@@ -1,7 +1,6 @@
-﻿from pyparsing import *
-import os
-os.system('getCameras.py "path_to_the_scene" ')
-data = open(os.system('qdev.py "path_to_the_scene" '),"r")
+from pyparsing import *
+
+data = open("code.q","r")
 
 LBRACE,RBRACE,LPAREN,RPAREN,SEMI = map(Suppress,"{}();")
 GROUP = Keyword("group")
