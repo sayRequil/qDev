@@ -1,0 +1,42 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{F60FA585-BAAA-46B1-A892-A3AD34274909}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>qDev</RootNamespace>
+    <AssemblyName>qDev</AssemblyName>
+    <DebugInfo>True</DebugInfo>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <Import Project="$(PythonBinPath)\SharpDevelop.Build.Python.targets" />
+  <ItemGroup>
+    <Reference Include="IronPython">
+      <HintPath>C:\Program Files %28x86%29\SharpDevelop\3.0\bin\..\AddIns\AddIns\BackendBindings\PythonBinding\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules">
+      <HintPath>C:\Program Files %28x86%29\SharpDevelop\3.0\bin\..\AddIns\AddIns\BackendBindings\PythonBinding\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="qdev_i.py" />
+    <None Include="code.q" />
+  </ItemGroup>
+</Project>
