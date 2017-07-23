@@ -3,11 +3,12 @@ from pyparsing import *
 data = open("code.q","r")
 
 LBRACE,RBRACE,LPAREN,RPAREN,SEMI,EQUAL = map(Suppress,"{}();=")
-GROUP = Keyword("group")
-ENTRY = Keyword("enter")
-PRINT = Keyword("print")
-VAR = Keyword("local")
-FROM = Keyword("from")
+GROUP = Keyword("$group")
+ENTRY = Keyword("$enter")
+PRINT = Keyword("$print")
+VAR = Keyword("$local")
+FROM = Keyword("$from")
+CALLVAR = Keyword("$callvar")
 
 real = Regex(r"[+-]?\d+\.\d*").setParseAction(lambda t:float(t[0]))
 integer = Regex(r"[+-]?\d+").setParseAction(lambda t:int(t[0]))
@@ -21,7 +22,7 @@ entry = Group(ENTRY + LPAREN + Group(Optional(delimitedList(value)))) + RPAREN +
 
 # define print function
 value = string | real | integer
-print = Group(PRINT + LPAREN + string("content") + RPAREN + SEMI
+print_ = Group(PRINT + LPAREN + string("content") + RPAREN + SEMI)
 
 # since Groups can contain Groups, need to use a Forward to define recursive expression
 group = Forward()
@@ -35,6 +36,10 @@ var = Group(VAR + " " + string("var_name") + EQUAL + Group(Optional(delimitedLis
 # define from
 from = Forward()
 from << Group(FROM + " " + string("module") + SEMI)
+
+# define callvar
+value = string | real | integer
+callvar = Group(CALLVAR + LPAREN + string("var_n") + RPAREN + SEMI)
 
 # ignore C style comments wherever they occur
 group.ignore(cStyleComment)
