@@ -29,7 +29,7 @@ group << Group(GROUP + LPAREN + string("name") + RPAREN +
               
 # define variables
 value = string | real | integer
-var = Group(VAR + EQUAL + Group(Optional(delimitedList(value)))) + SEMI)
+var = Group(VAR + string("var_name") + EQUAL + Group(Optional(delimitedList(value)))) + SEMI)
 
 # ignore C style comments wherever they occur
 group.ignore(cStyleComment)
