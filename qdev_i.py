@@ -7,6 +7,7 @@ GROUP = Keyword("group")
 ENTRY = Keyword("enter")
 PRINT = Keyword("print")
 VAR = Keyword("local")
+FROM = Keyword("from")
 
 real = Regex(r"[+-]?\d+\.\d*").setParseAction(lambda t:float(t[0]))
 integer = Regex(r"[+-]?\d+").setParseAction(lambda t:int(t[0]))
@@ -29,7 +30,11 @@ group << Group(GROUP + LPAREN + string("name") + RPAREN +
               
 # define variables
 value = string | real | integer
-var = Group(VAR + string("var_name") + EQUAL + Group(Optional(delimitedList(value)))) + SEMI)
+var = Group(VAR + " " + string("var_name") + EQUAL + Group(Optional(delimitedList(value)))) + SEMI)
+
+# define from
+from = Forward()
+from << Group(FROM + " " + string("module") + SEMI)
 
 # ignore C style comments wherever they occur
 group.ignore(cStyleComment)
