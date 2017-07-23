@@ -9,6 +9,7 @@ PRINT = Keyword("$print")
 VAR = Keyword("$local")
 FROM = Keyword("$from")
 CALLVAR = Keyword("$callvar")
+ARRAY = Keyword("$array")
 
 real = Regex(r"[+-]?\d+\.\d*").setParseAction(lambda t:float(t[0]))
 integer = Regex(r"[+-]?\d+").setParseAction(lambda t:int(t[0]))
@@ -31,15 +32,20 @@ group << Group(GROUP + LPAREN + string("name") + RPAREN +
               
 # define variables
 value = string | real | integer
-var = Group(VAR + " " + string("var_name") + EQUAL + Group(Optional(delimitedList(value)))) + SEMI)
+var = Group(VAR + " " + string("var_name") + EQUAL + string("var_value") + SEMI)
 
 # define from
 from = Forward()
 from << Group(FROM + " " + string("module") + SEMI)
 
 # define callvar
-value = string | real | integer
 callvar = Group(CALLVAR + LPAREN + string("var_n") + RPAREN + SEMI)
+
+# define array
+value = string | real |integer
+array = Group(ARRAY + LBRACE + Group(Optional(delimitedList(value))) + RBRACE)
+
+for i,v in pairs:
 
 # ignore C style comments wherever they occur
 group.ignore(cStyleComment)
